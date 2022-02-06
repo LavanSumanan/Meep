@@ -6,6 +6,7 @@ const typeDefs = gql`
     firstName: String
     lastName: String
     age: Int
+    friends: [User]
   }
 
   # The "Query" type is special: it lists all of the available queries that
@@ -24,18 +25,28 @@ const resolvers = {
   },
 };
 
+const Bob = {
+  id: "1",
+  firstName: "Bob",
+  lastName: "Joe",
+  age: 18,
+};
+
+const Jane = {
+  id: "2",
+  firstName: "Jane",
+  lastName: "Smith",
+  age: 23,
+};
+
 const users = [
   {
-    id: "1",
-    firstName: "Bob",
-    lastName: "Joe",
-    age: 18,
+    ...Bob,
+    friends: Bob,
   },
   {
-    id: "2",
-    firstName: "Jane",
-    lastName: "Smith",
-    age: 23,
+    ...Jane,
+    friends: Jane,
   },
 ];
 
