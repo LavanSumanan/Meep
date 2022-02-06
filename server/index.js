@@ -1,12 +1,52 @@
+const express = require("express");
+const router = require("./routes");
+
+const app = express();
+
+app.use(express.json());
+app.use(router);
+
 const { ApolloServer, gql } = require("apollo-server");
 
 const typeDefs = gql`
   type User {
-    id: ID
+    id: ID!
+    email: String
+    password: String
     firstName: String
     lastName: String
     age: Int
-    friends: [User]
+    communities: [Community]
+    dms: [DM]
+  }
+
+  type Community {
+    id: ID!
+    name: String
+    memberCount: Int
+    members: [User]
+    threads: [Thread]
+  }
+
+  type Thread {
+    id: ID!
+    author: User
+    title: String
+    content: String
+    timestamp: String
+  }
+
+  type DM {
+    id: ID!
+    friend: User
+    messages: [Message]
+  }
+
+  type Message {
+    id: ID!
+    author: User
+    content: String
+    timestamp: String
   }
 
   # The "Query" type is special: it lists all of the available queries that
@@ -42,11 +82,11 @@ const Jane = {
 const users = [
   {
     ...Bob,
-    friends: Bob,
+    friends: Jane,
   },
   {
     ...Jane,
-    friends: Jane,
+    friends: Bob,
   },
 ];
 
