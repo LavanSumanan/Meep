@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
+import TextInput from "../components/TextInput";
 
 const SignIn = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [values, setValues] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
 
   const navigate = useNavigate();
 
-  const validateLogin = (inputUsername, inputPassword) => {
-    if (inputUsername === "Joe" && inputPassword === "1234") {
+  const validateLogin = (username, password) => {
+    if (username === "Joe" && password === "1234") {
       setLoggedIn(true);
     }
   };
@@ -21,30 +21,35 @@ const SignIn = () => {
     }
   }, [loggedIn]);
 
+  const handleTextInputChange = (name, value) => {
+    setValues({ ...values, [name]: value });
+  };
+
   return (
     <div>
-      <h1>Sign In Page</h1>
-      <label htmlFor="name">Username</label>
-      <input
-        type="text"
-        id="name"
-        value={username}
-        onChange={(e) => {
-          setUsername(e.target.value);
-          console.log(username);
-        }}
-      />
-      <label htmlFor="name">Password</label>
-      <input
+      <h1>Meep.</h1>
+      <TextInput
+        name="username"
+        onChange={handleTextInputChange}
+        value={values["username"]}
+      >
+        Username
+      </TextInput>
+      <TextInput
+        name="password"
         type="password"
-        id="password"
-        value={password}
-        onChange={(e) => {
-          setPassword(e.target.value);
-          console.log(password);
-        }}
-      />
-      <Button onClick={() => validateLogin(username, password)}>Sign In</Button>
+        onChange={handleTextInputChange}
+        value={values["password"]}
+      >
+        Password
+      </TextInput>
+      <Button
+        onClick={() => validateLogin(values["username"], values["password"])}
+      >
+        Sign In
+      </Button>
+      <Link to={"/register"}>Sign Up</Link>
+      <Link to={"/"}>Forgot Password</Link>
     </div>
   );
 };

@@ -25,16 +25,17 @@ const typeDefs = gql`
     name: String
     memberCount: Int
     members: [User]
-    threads: [Thread]
+    # threads: [Thread]
   }
 
-  type Thread {
-    id: ID!
-    author: User
-    title: String
-    content: String
-    timestamp: String
-  }
+  # Set up in future
+  # type Thread {
+  #   id: ID!
+  #   author: User
+  #   title: String
+  #   content: String
+  #   timestamp: String
+  # }
 
   type DM {
     id: ID!
